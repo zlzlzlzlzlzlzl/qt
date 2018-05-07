@@ -1,0 +1,27 @@
+{include file='common/header'}
+<!-- 游戏面板开始 -->
+		<div name="content" class="content">
+		<div name='gerenzhongxin' class="gerenzhongxin">
+			<div name='leftiframe' class="leftiframe">
+				<div>
+					<div><img src="__STATIC__/images/timg.jpg" alt=""></div>
+					<div>{$userinfo->nickName}</div>
+				</div>
+				<div>
+					<div><span>账号：</span><span>{$userinfo->username}</span></div>
+					<div><span>QQ：</span><span>{$userinfo->qq}</span></div>
+					<div><span>余额：</span><span>{$userinfo->coin}</span></div>
+					<div><span>未结余额：</span><span>{$userinfo->fcoin}</span></div>
+					<div><span>最近登录：</span><span>{:date('Y-m-d H:i:s',$userinfo->loginTime)}</span></div>
+					<div><span>我的上级代理：</span><span>小松鼠是阿狸</span></div>
+					<div><button>查看我的下级</button><button>充值</button><button>提现</button><button>退出</button></div>
+				</div>
+			</div>
+			<div name='rightiframe' class="rightiframe">此区域为左侧信息栏通用功能实现框，包括充值记录查询，提现记录、盈亏统计、登陆历史、上下级代理情况、下注记录的展示，由于暂无后台不予展示。			</div>
+		</div>
+		<!-- 个人中心结束 -->
+	</div>
+	</div>
+<!-- 页面容器结束 -->
+
+{include file='common/footer'}

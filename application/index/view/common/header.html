@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>两骰玩法</title>
+	<link rel="stylesheet" href="__STATIC__/css/index.css">
+	<link rel="stylesheet" href="__STATIC__/css/asset.css">
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	<script src='__STATIC__/js/jquery.js'></script>
+	<script src="__STATIC__/js/function.js"></script>
+	<script src='__STATIC__/js/touzhu.js'></script>
+	<script src="__STATIC__/js/layer.js"></script>
+	<script src="__STATIC__/js/jquery.downCount.js"></script>
+</head>
+<body>
+<!-- 页面容器 -->
+	<div class="box">
+	<!-- 顶部导航栏开始 -->
+		<div name="navigator" class="navigator">
+		<div name='left-nav' class="left-nav">
+		<div name='logo' class="logo"><a href="{:url('/userinfo')}"><img src="__STATIC__/images/timg.jpg" alt=""></a></div>
+		<div name='username' class="username"><a href="{:url('/userinfo')}">{$userinfo->nickName}</a></div>
+		<div name='money' class="money"><a href="{:url('/userinfo')}">余额：{$userinfo->coin}</a></div>
+		<div><a href="{:url('/logout')}">退出</a></div>
+		</div>
+		<div>
+		<button class="btn btn-success btn-primary btn-lg" id="gameTwo" onclick="javascript:window.location='{:url('/two')}'">两骰</button>&nbsp;/&nbsp;<button class="btn btn-primary btn-success btn-lg" id="gameThree" onclick="javascript:window.location='{:url('/')}'">三骰</button>
+		</div>
+		<div name='right-nav' class="right-nav">
+		<div><a href="{:url('/')}"><img src="" alt="">首页</a></div>
+		<div><a href="{:url('/gameinfo')}"><img src="" alt="">玩法简介</a></div>
+		<div><a href="{:url('/userinfo')}"><img src="" alt="">个人中心</a></div>
+		<div><a href="" onclick="javascript:alert('功能添加中！');"><img src="" alt="">在线客服</a></div>
+		</div>
+		</div>
+	<!-- 顶部导航栏结束 -->
