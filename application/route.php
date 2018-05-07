@@ -19,7 +19,9 @@ Route::post('dologin','index/UserLogin/doLogin');
 Route::post('toregister','index/UserLogin/toRegister');
 Route::get('logout','index/UserLogin/logOut');
 Route::post('qiangzhuang','index/index/qiangZhuang');
-Route::post('xiazhu','index/index/xiaZhu');
+Route::post('xiazhu','index/lottery/xiaZhu');
 Route::post('baozixiazhu','index/index/baoZiXiaZhu');
 Route::get('getqihao','index/index/getQiHao');
 Route::post('getSetting','index/index/getSetting');
+Route::post('getuserId','index/index/getUserId');
+

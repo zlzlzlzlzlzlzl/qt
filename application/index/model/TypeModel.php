@@ -4,6 +4,6 @@ namespace app\index\model;
 
 use think\Model;
 
-class Type extends Model{
+class TypeModel extends Model{
      protected $table = 'sea_type';
 }

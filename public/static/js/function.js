@@ -1,4 +1,5 @@
 // 写入一个投注图案
+var playedID;
 function addTouzhu(i,w) {
 	var a = '<div number="'+i+'"><img src="/static/images/'+i+'.png" alt=""></div>';
 	var z = $('.touzhukuang');
@@ -14,17 +15,20 @@ function addTouzhu(i,w) {
 				if(zd.length == 0){
 					z.append('<button class="btn btn-danger" id="qingkong" onClick="dropTouzhu()">清空</button>');
 				}
+				playedID = 1;
 				z.append(a);
 			}else if(w == 'erzhonger') {
 				if(zd.length == 0){
 					z.append('<button class="btn btn-danger" id="qingkong" onClick="dropTouzhu()">清空</button>');
 				}
+				playedID = 2;
 				z.append(a);
 				console.log('现在是2骰二中二');
 			}else if(w == 'duizi') {
 				if(zd.length == 0){
 					z.append('<button class="btn btn-danger" id="qingkong" onClick="dropTouzhu()">清空</button>');
 				}
+				playedID = 3;
 				z.append(a);
 				console.log('现在是2骰对子');
 			}
@@ -38,18 +42,21 @@ function addTouzhu(i,w) {
 			if(zd.length == 0){
 					z.append('<button class="btn btn-danger" id="qingkong" onClick="dropTouzhu()">清空</button>');
 				}
+				playedID = 4;
 			z.append(a);
 			console.log('现在是3骰单压');
 		}else if(w == 'erzhonger') {
 			if(zd.length == 0){
 					z.append('<button class="btn btn-danger" id="qingkong" onClick="dropTouzhu()">清空</button>');
 				}
+				playedID = 5;
 			z.append(a);
 			console.log('现在是3骰二中二');
 		}else if(w == 'baozi') {
 			if(zd.length == 0){
 					z.append('<button class="btn btn-danger" id="qingkong" onClick="dropTouzhu()">清空</button>');
 				}
+				playedID = 6;
 			z.append(a);
 			console.log('现在是3骰豹子');
 		}
@@ -66,6 +73,21 @@ function tuanCurrent($this) {
 function removeTouzhu(i) {
 	$('.touzhukuang > [number='+i+']').remove();
 }
+// 获取UID
+function getUid(){
+	var uid;
+	$.ajax({
+		url:'/getUserId',
+		type:"post",
+		success:function(data){
+			uid = data;
+		}
+
+
+	});
+	return uid;
+}
+
 //删除所有投注图案
 function dropTouzhu() {
 	$('.touzhukuang').empty();
@@ -133,17 +155,17 @@ function getTouZhu() {
 function getQiHao() {//获取当前期号和开奖时间
 	var qihao;
 		$.ajax({
-		          	url:"/getqihao",
-            		type:"get",
-            		dataType:"json",
-            		async:false,
-            		success:function(data){
-            			qihao = $.parseJSON(data);
-            		},
-            		error:function(data){
-                	
-           		}
-        			});
+          	url:"/getqihao",
+    		type:"get",
+    		dataType:"json",
+    		async:false,
+    		success:function(data){
+    			qihao = $.parseJSON(data);
+    		},
+    		error:function(data){
+        	
+   		}
+			});
 		return qihao;
 }
 function getYaZhuBtn() {
@@ -182,6 +204,7 @@ function cDate() {
 // 	在此更改下注约束逻辑
 function checkplayed(money){
 	var played    = getYaZhuBtn();
+	var playedId  = playedID;
 	var codeToStr = getTouzhu();
 	var codeToArr = codeToStr.split(",");
 	var money     =  money ? money : getChouma();
@@ -189,7 +212,11 @@ function checkplayed(money){
 	var maxamount = parseInt(setting.maxamount);
 	var minamount = parseInt(setting.minamount); 
 	var touzhuinfo= $('.touzhuinfo').text();
-	return false;
+	var qihaos  = $('#kjqihao').text();
+	var qihaos = qihaos.match(/[0-9]*/g);
+	var qihao = qihaos[1];
+	// var SysActionNo = getActionNo();
+	// return false;
 	if(money > maxamount){
 		layer.alert('下注金额大于最大投注额:'+maxamount, {
 			  icon: 5
@@ -201,7 +228,7 @@ function checkplayed(money){
 			});
 		return false;
 	}else if(touzhuinfo != '投注'){
-		layer.alert(touzhuinfo+'时间不允许下注'+minamount, {
+		layer.alert(touzhuinfo+'时间不允许下注', {
 			  icon: 5
 			});
 		return false;
@@ -209,13 +236,13 @@ function checkplayed(money){
 
 
 	if(played == 'danya'){
-		return danya(codeToArr,money);
+		return danya(codeToArr,money,qihao,playedId);
 	}else if(played == 'erzhonger'){
-		return erzhonger(codeToArr,money);
+		return erzhonger(codeToArr,money,qihao,playedId);
 	}else if(played == 'baozi'){
-		return baozi(codeToArr,money);
+		return baozi(codeToArr,money,qihao,playedId);
 	}else if(played == 'duizi'){
-		return duizi(codeArr,money);
+		return duizi(codeArr,money,qihao,playedId);
 	}
 }
 
@@ -243,7 +270,7 @@ function getSetting(){
 
 
 // 对子
- function duizi(code,money){
+ function duizi(code,money,qihao,playedId){
 	var data  = {};
 	var zcode = '';
 	var index = 0;
@@ -251,15 +278,17 @@ function getSetting(){
  			layer.alert('对子模式:请选择一个号码');
  			return false;
  	}
- 	zcode = code[0] +'|'+ code[0];
- 	data.odds  = zcode.length;
-	data.money = money;
-	data.code  = zcode;
+		zcode         = code[0] +'|'+ code[0];
+		data.odds     = zcode.length;
+		data.money    = money;
+		data.playedId = playedId;
+		data.qihao    = qihao;
+		data.code     = zcode;
  	return data;
  }
 
 // 豹子
- function baozi(code,money){
+ function baozi(code,money,qihao,playedId){
 	var data  = {};
 	var zcode = '';
 	var index = 0;
@@ -267,28 +296,32 @@ function getSetting(){
  			layer.alert('豹子模式:请选择一个号码');
  			return false;
  		}
- 	zcode = code[0] +'|'+ code[0] +'|'+ code[0];
- 	
-	data.odds  = zcode.length;
-	data.money = money;
-	data.code  = zcode;
+		zcode  = code[0] +'|'+ code[0] +'|'+ code[0];
+		
+		data.odds     = zcode.length;
+		data.money    = money;
+		data.qihao    = qihao;
+		data.playedId = playedId;
+		data.code     = zcode;
  	return data;
  }
 
 // 单压
-function danya(code,money){
-	var data   = {};
-	var zcode  = new Array();
-	data.odds  = code.length;
-	data.money = data.odds * money;
-	data.code  = code.join("|");
+function danya(code,money,qihao,playedId){
+	var data      = {};
+	var zcode     = new Array();
+	data.odds     = code.length;
+	data.money    = data.odds * money;
+	data.qihao    = qihao;
+	data.playedId = playedId;
+	data.code     = code.join("|");
 	// console.log(data);
 	return data;
 
 }
 
 // 二中二下注检查
-function erzhonger(code,money){
+function erzhonger(code,money,qihao,playedId){
 	var data  = {};
 	var ncode = code.sort();
 	var zcode = new Array();
@@ -301,7 +334,6 @@ function erzhonger(code,money){
 			return false;
 		}
 	}
-
 	// 笛卡尔积算法
 	for (var i = 0; i < ncode.length-1; i++) {
 		for (var j = i+1; j < ncode.length; j++) {
@@ -309,10 +341,12 @@ function erzhonger(code,money){
 		index++;
 		}
 	}
-	var odds   = zcode.length;
-	var zmoney = odds * money;
-	data.odds  = odds;
-	data.money = zmoney;
-	data.code  = zcode.join("|");
+	var odds      = zcode.length;
+	var zmoney    = odds * money;
+	data.odds     = odds;
+	data.money    = zmoney;
+	data.qihao    = qihao;
+	data.playedId = playedId;
+	data.code     = zcode.join("|");
 	return data;
 }

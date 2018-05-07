@@ -37,31 +37,7 @@ class Index extends Base
     public function getUserInfo() {
     	return $this->fetch('userinfo',['userinfo'=>$this->userinfo]);
     }
-    /**
-     * [qiangZhuang 抢庄逻辑]
-     * @return [type] [description]
-     */
-    public function qiangZhuang() {
 
-    }
-    /**a
-     * [xiaZhu 下注逻辑]
-     * @param  Request $request [description]
-     * @return [type]           [description]
-     */
-    public function xiaZhu(Request $request) {
-        $data = $request->post();
-        return json_encode($data);
-    }
-    /**
-     * [baoZiXiaZhu 投注豹子]
-     * @param  Request $request [description]
-     * @return [type]           [description]
-     */
-    public function baoZiXiaZhu(Request $request) {
-         $data = $request->post();
-         return json_encode($data);
-     }
     /**
      * [getQiHao 获取期号]
      * 
@@ -81,7 +57,7 @@ class Index extends Base
          if($request->isAjax()){
             return json_encode($data);
         }else{
-            return $data;
+            return $actionNo .','.$res->actionTime;
         }
     
     }
@@ -101,12 +77,10 @@ class Index extends Base
      * @return [type]           [description]
      */
     public function getSetting(Request $request){
-        $sys = new System();
-        $data = $sys::all();
-        $webData = array();
-        foreach ($data as $key => $value) {
-            $webData[$value['key']] = $value['value'];
-        }
-        return json_encode($webData);   
+        return json_encode($this->Sysinfo);   
+    }
+
+    public function getuserId(){
+        return json_encode($this->userinfo['id']);
     }
 }

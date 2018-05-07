@@ -4,6 +4,6 @@ namespace app\index\model;
 
 use think\Model;
 
-class Bets extends Model{
+class BetsModel extends Model{
      protected $table = 'sea_bets';
 }

@@ -48,17 +48,15 @@ $(function(){
 				var cont = '您共选择<span style="color:red;font-weight:bold;">'+data.odds+'</span>注<br>您的投注金额为：<span style="color:red;font-weight:bold;">'+data.money+'</span>元<br>下注号码为：<span style="color:red;font-weight:bold;">'+data.code+'</span>';
 				layer.confirm(cont,{btn:['下注','取消']},function(touzhunum,index){
 					//判断用户点击按钮，此处应该写ajax请求发送下注数据
-					layer.msg('下注成功');
-						var money = getChouma();
-						var userid = 1;
-						var qihao = '2018-06-12';
+					// layer.msg('下注成功');
+						var userid = getUid();
 					$.ajax({
-            			url:"#",
-            			data:{'money':money,'userid':userid,'haoma':getTouzhu(),'qihao':qihao},
+            			url:"/xiazhu",
+            			data:{'money':data.money,'userid':userid,'haoma':getTouzhu(),'qihao':data.qihao,'playedId':data.playedId},
             			type:"Post",
             			dataType:"json",
             			success:function(data){
-               			layer.msg(data.msg);
+               			layer.msg(data);
             			},
             			error:function(data){
                 		$.messager.alert('错误',data.msg);
@@ -71,23 +69,22 @@ $(function(){
 		} else {
 			var money;
 			var data = checkplayed(money);
+			// alert(data.playedId);
 			if(!data){
 				return;
 			}
 			var cont = '<span>您共选择:</span><span style="color:red;font-weight:bold;">'+data.odds+'</span>注<br>您的投注金额为：<span style="color:red;font-weight:bold;">'+data.money+'</span>元<br>下注号码为：<span style="color:red;font-weight:bold;">'+data.code+'</span>';
 			layer.confirm(cont,{btn:['下注','取消']},function(){
 				//此处写下注请求AJAX
-				layer.msg('下注成功');
-				var money = getChouma();
-				var userid = 1;
-				var qihao = '2018-06-12';
+				// layer.msg('下注成功');
+				var userid = getUid();
 				$.ajax({
             			url:"/xiazhu",
-            			data:{'money':money,'userid':userid,'haoma':getTouzhu(),'qihao':qihao},
+            			data:{'money':data.money,'userid':userid,'haoma':getTouzhu(),'qihao':data.qihao,'playedId':data.playedId},
             			type:"Post",
             			dataType:"json",
             			success:function(data){
-               			layer.msg(data.msg);
+               			layer.msg(data);
             			},
             			error:function(data){
                 		$.messager.alert('错误',data.msg);
