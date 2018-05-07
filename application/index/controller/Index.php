@@ -5,6 +5,7 @@ use app\index\controller\Base;
 use think\Request;
 use think\Session;
 use app\index\model\DataTimeModel;
+use app\index\model\SystemModel as System;
 
 class Index extends Base
 {
@@ -68,18 +69,20 @@ class Index extends Base
      * @return [JSON]           [期号,开奖时间]
      */
     public function getQiHao(Request $request) {
-        //如果不是ajax请求
-        if(!$request->isAjax()){
-            die();
-        }
-        $dm = new DataTimeModel();
-        $y = date('Y');
-        $yue = date('m');
-        $d = date('d');
-        $h = date('H:i:s');
+        $dm  = new DataTimeModel();
+        $h   = date('H:i:s'); 
         $res = $dm->where('actionTime','>',$h)->limit(0,1)->find();
-        $data = ['qihao'=>$res->actionNo,'kjsj'=>$res->actionTime];
-        return json_encode($data);
+        $n   = date('Y');
+        $y   = sprintf('%02s',  date('m'));
+        $d   = sprintf('%02s',  date('d'));
+        $c   = sprintf('%03s', $res->actionNo);
+        $actionNo = $n.$y.$d.$c;
+        $data = ['qihao'=>$actionNo,'kjsj'=>$res->actionTime];
+         if($request->isAjax()){
+            return json_encode($data);
+        }else{
+            return $data;
+        }
     
     }
     /**
@@ -89,5 +92,21 @@ class Index extends Base
      */
     public function getMethod(Request $request) {
 
+    }
+
+
+    /**
+     * [getSetting 获取设置]
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function getSetting(Request $request){
+        $sys = new System();
+        $data = $sys::all();
+        $webData = array();
+        foreach ($data as $key => $value) {
+            $webData[$value['key']] = $value['value'];
+        }
+        return json_encode($webData);   
     }
 }

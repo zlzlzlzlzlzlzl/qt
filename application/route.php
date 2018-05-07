@@ -22,3 +22,4 @@ Route::post('qiangzhuang','index/index/qiangZhuang');
 Route::post('xiazhu','index/index/xiaZhu');
 Route::post('baozixiazhu','index/index/baoZiXiaZhu');
 Route::get('getqihao','index/index/getQiHao');
+Route::post('getSetting','index/index/getSetting');

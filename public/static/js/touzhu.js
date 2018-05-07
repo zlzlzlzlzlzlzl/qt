@@ -29,8 +29,7 @@ $(function(){
 		}
 	});
 	$('#xiazhubtn').on('click',function(){
-			// 根据玩法检查下注合法性
-			
+			// 根据玩法检查下注合法性	
 		if(!getTouzhu()){
 			layer.msg('请选择图案',{time:1300});
 			return;
@@ -38,6 +37,7 @@ $(function(){
 		// 投注按钮点击事件(如果有选中筹码，则else 若无则提示输入下注金额)
 		if(!getChouma()){
 			layer.prompt({'title':'请输入投注金额'},function(money,index){
+				// 检查下注的合法性
 				var data = checkplayed(money);
 			if(!data){
 				return;
@@ -45,7 +45,7 @@ $(function(){
 			// console.log(data);
 				//如果没有选中筹码，则提示输入金额
 				layer.close(index);
-				var cont = '您共选择<span style="color:red;font-weight:bold;">'+data.odds+'</span>注<br>您的投注金额为：<span style="color:red;font-weight:bold;">'+data.moeny+'</span>元<br>下注号码为：<span style="color:red;font-weight:bold;">'+data.code+'</span>';
+				var cont = '您共选择<span style="color:red;font-weight:bold;">'+data.odds+'</span>注<br>您的投注金额为：<span style="color:red;font-weight:bold;">'+data.money+'</span>元<br>下注号码为：<span style="color:red;font-weight:bold;">'+data.code+'</span>';
 				layer.confirm(cont,{btn:['下注','取消']},function(touzhunum,index){
 					//判断用户点击按钮，此处应该写ajax请求发送下注数据
 					layer.msg('下注成功');
@@ -74,7 +74,7 @@ $(function(){
 			if(!data){
 				return;
 			}
-			var cont = '<span>您共选择:</span><span style="color:red;font-weight:bold;">'+data.odds+'</span>注<br>您的投注金额为：<span style="color:red;font-weight:bold;">'+data.moeny+'</span>元<br>下注号码为：<span style="color:red;font-weight:bold;">'+data.code+'</span>';
+			var cont = '<span>您共选择:</span><span style="color:red;font-weight:bold;">'+data.odds+'</span>注<br>您的投注金额为：<span style="color:red;font-weight:bold;">'+data.money+'</span>元<br>下注号码为：<span style="color:red;font-weight:bold;">'+data.code+'</span>';
 			layer.confirm(cont,{btn:['下注','取消']},function(){
 				//此处写下注请求AJAX
 				layer.msg('下注成功');
@@ -128,7 +128,7 @@ $(function(){
 	});
 	//计时器逻辑实现
 $(document).ready(function(){
-			console.log(cDate());
+			// console.log(cDate());
 	});
 	$('#wfbtn > button').on('click',function(){
 		if(!$(this).hasClass('btn-danger')) {

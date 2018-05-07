@@ -169,53 +169,150 @@ function cDate() {
 			var h      = myDate.getHours(); //获取当前小时数(0-23)
 			var m      = myDate.getMinutes(); //获取当前分钟数(0-59)'4/28/2019 11:02:00'
 			var str    = month+'/'+date+'/'+year+' '+kjsj;
-			var qi     = year+'-'+month+'-'+date+'-'+qihao.qihao;
+			var qi     = qihao.qihao;
 			var data   = {sj:str,qi:qi};
     	return data;
 }
 
+// 下注合法性检查 不同的模式用不同的方法检查
+// 返回data对象 计算出需要展示的数据:
+// 	data.odds  一共选择的注数
+// 	data.code  计算出下注号码
+// 	data.money 最终的下注金额
+// 	在此更改下注约束逻辑
+function checkplayed(money){
+	var played    = getYaZhuBtn();
+	var codeToStr = getTouzhu();
+	var codeToArr = codeToStr.split(",");
+	var money     =  money ? money : getChouma();
+	var setting   = getSetting();
+	var maxamount = parseInt(setting.maxamount);
+	var minamount = parseInt(setting.minamount); 
+	var touzhuinfo= $('.touzhuinfo').text();
+	return false;
+	if(money > maxamount){
+		layer.alert('下注金额大于最大投注额:'+maxamount, {
+			  icon: 5
+			});
+		return false;
+	}else if(money < minamount){
+		layer.alert('下注金额小于最小投注额:'+minamount, {
+			  icon: 5
+			});
+		return false;
+	}else if(touzhuinfo != '投注'){
+		layer.alert(touzhuinfo+'时间不允许下注'+minamount, {
+			  icon: 5
+			});
+		return false;
+	}
 
-function checkplayed(moeny){
-	var played = getYaZhuBtn();
-	var codeToStr   = getTouzhu();
-	var codeToArr   = codeToStr.split(",");
-	var moeny  =  moeny ? moeny : getChouma();
-	console.log(codeToArr);
+
 	if(played == 'danya'){
-		return danya(codeToArr,moeny);
+		return danya(codeToArr,money);
 	}else if(played == 'erzhonger'){
-		return erzhonger(codeToArr,moeny);
+		return erzhonger(codeToArr,money);
+	}else if(played == 'baozi'){
+		return baozi(codeToArr,money);
+	}else if(played == 'duizi'){
+		return duizi(codeArr,money);
 	}
 }
+
+// 获取后台的设置参数
+function getSetting(){
+	var vdata;
+	$.ajax({
+      	url:"/getSetting",
+		type:"post",
+		dataType:"json",
+		async:false,
+		success:function(data){
+			vdata = $.parseJSON(data);
+
+		},
+		error:function(data){
+    	
+		}
+	});
+	return vdata;
+}
+
+
+
+
+
+// 对子
+ function duizi(code,money){
+	var data  = {};
+	var zcode = '';
+	var index = 0;
+	if(code.length > 1){
+ 			layer.alert('对子模式:请选择一个号码');
+ 			return false;
+ 	}
+ 	zcode = code[0] +'|'+ code[0];
+ 	data.odds  = zcode.length;
+	data.money = money;
+	data.code  = zcode;
+ 	return data;
+ }
+
+// 豹子
+ function baozi(code,money){
+	var data  = {};
+	var zcode = '';
+	var index = 0;
+ 		if(code.length > 1){
+ 			layer.alert('豹子模式:请选择一个号码');
+ 			return false;
+ 		}
+ 	zcode = code[0] +'|'+ code[0] +'|'+ code[0];
+ 	
+	data.odds  = zcode.length;
+	data.money = money;
+	data.code  = zcode;
+ 	return data;
+ }
+
 // 单压
-function danya(code,moeny){
-	var data;
+function danya(code,money){
+	var data   = {};
+	var zcode  = new Array();
+	data.odds  = code.length;
+	data.money = data.odds * money;
+	data.code  = code.join("|");
+	// console.log(data);
+	return data;
 
 }
 
-function erzhonger(code,moeny){
-	var data = {};
+// 二中二下注检查
+function erzhonger(code,money){
+	var data  = {};
 	var ncode = code.sort();
 	var zcode = new Array();
 	var index = 0;
 	for (var i = 0; i < ncode.length; i++) {
 		if(ncode[i] == ncode[i+1] || code.length < 2){
-			layer.alert('二中二模式需要选择两个或两个以上不同的号码搭配投注', {
+			layer.alert('二中二模式:需要选择两个或两个以上不同的号码搭配投注', {
 			  icon: 5
 			})
 			return false;
 		}
 	}
+
+	// 笛卡尔积算法
 	for (var i = 0; i < ncode.length-1; i++) {
 		for (var j = i+1; j < ncode.length; j++) {
 			zcode[index] = ncode[i] +','+ncode[j];
 		index++;
 		}
 	}
-	var odds = zcode.length;
-	var zmoeny = odds * moeny;
-	data.odds = odds;
-	data.moeny = zmoeny;
-	data.code = zcode.join("|");
+	var odds   = zcode.length;
+	var zmoney = odds * money;
+	data.odds  = odds;
+	data.money = zmoney;
+	data.code  = zcode.join("|");
 	return data;
 }
