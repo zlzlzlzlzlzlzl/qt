@@ -6,6 +6,7 @@ use think\Request;
 use think\Session;
 use app\index\model\DataTimeModel;
 use app\index\model\SystemModel as System;
+use app\index\model\UserModel as User;
 
 class Index extends Base
 {
@@ -80,7 +81,21 @@ class Index extends Base
         return json_encode($this->Sysinfo);   
     }
 
+    /**
+     * [getuserId 获取用户ID]
+     * @return [type] [description]
+     */
     public function getuserId(){
         return json_encode($this->userinfo['id']);
     }
+
+    public function getCoin(request $request){
+        $arr = $request->post();
+        $id = $arr['id'];
+        $User = new User();
+        $coin = $User->where('id',$id)->value('coin');
+        echo json_encode($coin);
+    }
+
+
 }

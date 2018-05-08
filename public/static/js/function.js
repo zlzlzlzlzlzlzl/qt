@@ -4,7 +4,7 @@ function addTouzhu(i,w) {
 	var a = '<div number="'+i+'"><img src="/static/images/'+i+'.png" alt=""></div>';
 	var z = $('.touzhukuang');
 	var zd = $('.touzhukuang > div');
-	if($('#wanfa').val() == 2) {
+	if($('#gameTwo').hasClass('gamecurrent')) {
 			// if($('.touzhukuang > div').length < 2) {
 			// 	if($('.touzhukuang > div').length == 0) {
 			// 	$('.touzhukuang').append('<button class="btn btn-danger" id="qingkong" onClick="dropTouzhu()">清空</button>');
@@ -32,7 +32,7 @@ function addTouzhu(i,w) {
 				z.append(a);
 				console.log('现在是2骰对子');
 			}
-	} else if($('#wanfa').val() == 3) {
+	} else if($('#gameThree').hasClass('gamecurrent')) {
 		// if($('.touzhukuang > div').length < 3) {
 		// 	if($('.touzhukuang > div').length == 0) {
 		// 		$('.touzhukuang').append('<button class="btn btn-danger" id="qingkong" onClick="dropTouzhu()">清空</button>');
@@ -124,14 +124,6 @@ function gameimgnum() {
 function getGameMethod() {
 	return $('#wanfa').val();
 }
-// 设置当前玩法CSS类
-function setGameMethod() {
-	if($('#wanfa').val() == 2){
-		$('#gameTwo').addClass('gamecurrent');
-	} else if($('#wanfa').val() == 3) {
-		$('#gameThree').addClass('gamecurrent');
-	}
-}
 // 获取当前选中筹码值
 function getChouma() {
 	var s = $('.choumaimg');
@@ -168,8 +160,27 @@ function getQiHao() {//获取当前期号和开奖时间
 			});
 		return qihao;
 }
+// 更新页面余额
+function getMoney(){
+	var uid = $('#uid').val();
+	$.ajax({
+		url:'/getUserCoin',
+		type:"post",
+		data:{'id':uid},
+		dataType:'json',
+		async:false,
+		success:function(data){
+			$('#userMoney').text("余额："+data);
+		},
+		error:function(data){
+		}
+	})
+}
+
+
+
 function getYaZhuBtn() {
-	var b = $('#wfbtn > button');
+	var b = $('.played > button');
 	var t = '';
 	b.each(function(i,v){
 			if($(v).hasClass('btn-danger')) {
@@ -196,6 +207,18 @@ function cDate() {
     	return data;
 }
 
+/**
+ * [getqihao 获取页面日期]
+ * @return {[type]} [description]
+ */
+function getqihao(){
+	var qihaos  = $('#kjqihao').text();
+	var qihaos = qihaos.match(/[0-9]*/g);
+	var qihao = qihaos[1];
+	return qihao;
+}
+
+
 // 下注合法性检查 不同的模式用不同的方法检查
 // 返回data对象 计算出需要展示的数据:
 // 	data.odds  一共选择的注数
@@ -212,9 +235,7 @@ function checkplayed(money){
 	var maxamount = parseInt(setting.maxamount);
 	var minamount = parseInt(setting.minamount); 
 	var touzhuinfo= $('.touzhuinfo').text();
-	var qihaos  = $('#kjqihao').text();
-	var qihaos = qihaos.match(/[0-9]*/g);
-	var qihao = qihaos[1];
+	var qihao = getqihao();
 	// var SysActionNo = getActionNo();
 	// return false;
 	if(money > maxamount){
@@ -242,7 +263,7 @@ function checkplayed(money){
 	}else if(played == 'baozi'){
 		return baozi(codeToArr,money,qihao,playedId);
 	}else if(played == 'duizi'){
-		return duizi(codeArr,money,qihao,playedId);
+		return duizi(codeToArr,money,qihao,playedId);
 	}
 }
 
@@ -279,7 +300,7 @@ function getSetting(){
  			return false;
  	}
 		zcode         = code[0] +'|'+ code[0];
-		data.odds     = zcode.length;
+		data.odds     = code.length;
 		data.money    = money;
 		data.playedId = playedId;
 		data.qihao    = qihao;
@@ -298,7 +319,7 @@ function getSetting(){
  		}
 		zcode  = code[0] +'|'+ code[0] +'|'+ code[0];
 		
-		data.odds     = zcode.length;
+		data.odds     = code.length;
 		data.money    = money;
 		data.qihao    = qihao;
 		data.playedId = playedId;
@@ -350,3 +371,52 @@ function erzhonger(code,money,qihao,playedId){
 	data.code     = zcode.join("|");
 	return data;
 }
+
+
+/**
+ * [two 切换两骰和三骰]
+ * @return {[type]} [description]
+ */
+function twoAndThree(){
+	$('.TT').toggle();
+	$('#two').toggle();
+	$('#three').toggle();
+	$('#gameTwo').toggleClass('gamecurrent');
+	$('#gameThree').toggleClass('gamecurrent');
+	if($('#gameTwo').hasClass('gamecurrent')){
+		$('.twwf').addClass('played');
+		$('.thwf').removeClass('played');
+	}else{
+		$('.thwf').addClass('played');
+		$('.twwf').removeClass('played');
+	}
+
+
+}
+
+/**
+ * [getCode 获取开奖号码]
+ * 实现功能
+ * 倒计时结束获取最新一期的开奖号 并且更新开奖记录
+ * @return {[type]} [description]
+ */
+function getCode(){
+	var qihao = getqihao();
+
+	$.ajax({
+		url:"/getCode",
+		type:"post",
+		dataType:"json",
+		success:function(data){
+			$('.shangqi > div > img').each(function(i){
+				$(this).attr('src',"/static/images/"+data[i]+".png");
+			})
+		},
+		error:function(){
+
+		}
+	});
+
+}
+
+

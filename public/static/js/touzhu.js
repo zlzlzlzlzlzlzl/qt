@@ -1,5 +1,4 @@
 $(function(){
-	setGameMethod();//初始化玩法
 	$('.gamecontrol > div ').on('click',function(){
 		//给投注图案添加点击事件
 		tuanCurrent($(this));
@@ -56,6 +55,7 @@ $(function(){
             			type:"Post",
             			dataType:"json",
             			success:function(data){
+            			getMoney();
                			layer.msg(data);
             			},
             			error:function(data){
@@ -84,6 +84,7 @@ $(function(){
             			type:"Post",
             			dataType:"json",
             			success:function(data){
+            			getMoney();
                			layer.msg(data);
             			},
             			error:function(data){
@@ -123,9 +124,23 @@ $(function(){
             		}
         		});
 	});
+
+
+
+
+
+
+
+
+
+
+
+
 	//计时器逻辑实现
 $(document).ready(function(){
-			// console.log(cDate());
+	getCode();
+	setInterval("getCode()",5000);
+
 	});
 	$('#wfbtn > button').on('click',function(){
 		if(!$(this).hasClass('btn-danger')) {

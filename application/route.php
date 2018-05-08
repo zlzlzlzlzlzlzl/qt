@@ -24,4 +24,5 @@ Route::post('baozixiazhu','index/index/baoZiXiaZhu');
 Route::get('getqihao','index/index/getQiHao');
 Route::post('getSetting','index/index/getSetting');
 Route::post('getuserId','index/index/getUserId');
-
+Route::post('getCode','index/lottery/getCode');
+Route::post('getUserCoin','index/index/getCoin');

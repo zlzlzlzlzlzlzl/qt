@@ -4,7 +4,8 @@ use app\index\controller\Base;
 use think\Request;
 use think\Session;
 use app\index\model\BetsModel as Bets;
-
+use app\index\model\UserModel as User;
+use app\index\model\DataModel as Lo;
 
 class Lottery extends Base{
 
@@ -16,7 +17,8 @@ class Lottery extends Base{
     public function qiangZhuang() {
 
     }
-    /**a
+
+    /**
      * [xiaZhu 下注逻辑]
      * @param  Request $request [description]
      * @return [type]           [description]
@@ -41,6 +43,10 @@ class Lottery extends Base{
         if($this->userinfo['agency'] && $this->Sysinfo['daili'] == 0){
         	die(json_encode('代理不能投注 有疑问请联系客服协助解决'));
         }
+        // 判断余额是否足够支付
+        if($this->userinfo['coin'] < $money){
+            die(json_encode($this->userinfo['coin'].'您的余额不足,请立即充值'.$money));
+        }
         // 判断期号是否正确以及下注时间是否是合法下注时间
         $in = new \app\index\controller\Index;
         $jsonTime = $in->getQiHao($request);
@@ -63,6 +69,9 @@ class Lottery extends Base{
         $betM = new Bets();
         $result = $betM->insert($betArr);
         if($result){
+            $User = new User();
+            $User->where('id',$this->userinfo['id'])->setDec('coin',$money);//-余额
+            $User->where('id',$this->userinfo['id'])->setInc('fcoin',$money);//+冻结金额
         	return "下注成功!";
         }else{
         	return "下注失败!网络故障!";
@@ -70,8 +79,18 @@ class Lottery extends Base{
     }
 
 
+    /**
+     * [getCode 获取最新的开奖期号]
+     * @param  Request $request [description]
+     * @return [type]           [description]
+     */
+    public function getCode(Request $request){
+        $Lo = new Lo();
+        $data = $Lo->order('number DESC')->find();
+        $code = explode(',',$data->data);
+        echo json_encode($code);
 
-
+    }
 
 
 
