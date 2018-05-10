@@ -40,32 +40,20 @@
 		<div name="content" class="content">
 		<!-- 在线人数开始 -->
 			<div name='xinxi' class='xinxi'>
-				<p>当前在线<b>49</b>人</p>
+				<p>当前在线<b>{$userCount}</b>人</p>
 				<div name='zaixian' class="zaixian  scroll_content">
-				<div class="people"><img src="__STATIC__/images/timg.jpg" alt=""><div><p>我是小桑树</p><p>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;河北</p><p>147.5万</p></div></div>
-				<div class="people"><img src="__STATIC__/images/timg.jpg" alt=""><div><p>得到小玉树</p><p>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;天津</p><p>147</p></div></div>
-				<div class="people"><img src="__STATIC__/images/timg.jpg" alt=""><div><p>~小槐树</p><p>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;北京</p><p>147万</p></div></div>
-				<div class="people"><img src="__STATIC__/images/timg.jpg" alt=""><div><p>em小柳树</p><p>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;河南</p><p>7.5万</p></div></div>
-				<div class="people"><img src="__STATIC__/images/timg.jpg" alt=""><div><p>小杨树</p><p>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;上海</p><p>47.5万</p></div></div>
-				<div class="people"><img src="__STATIC__/images/timg.jpg" alt=""><div><p>小松树</p><p>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;广州</p><p>14.5万</p></div></div>
-				<div class="people"><img src="__STATIC__/images/timg.jpg" alt=""><div><p>是小怪物</p><p>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;云南</p><p>17.2万</p></div></div>
-				<div class="people"><img src="__STATIC__/images/timg.jpg" alt=""><div><p>小桑树是我</p><p>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;新疆</p><p>11.9万</p></div></div>
-				<div class="people"><img src="__STATIC__/images/timg.jpg" alt=""><div><p>小桑树是我</p><p>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;新疆</p><p>11.9万</p></div></div>
-				<div class="people"><img src="__STATIC__/images/timg.jpg" alt=""><div><p>小桑树是我</p><p>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;新疆</p><p>11.9万</p></div></div>
-				<div class="people"><img src="__STATIC__/images/timg.jpg" alt=""><div><p>小桑树是我</p><p>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;新疆</p><p>11.9万</p></div></div>
-				<div class="people"><img src="__STATIC__/images/timg.jpg" alt=""><div><p>小桑树是我</p><p>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;新疆</p><p>11.9万</p></div></div>
-				<div class="people"><img src="__STATIC__/images/timg.jpg" alt=""><div><p>我是小桑树</p><p>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;河北</p><p>147.5万</p></div></div>
-				<div class="people"><img src="__STATIC__/images/timg.jpg" alt=""><div><p>得到小玉树</p><p>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;天津</p><p>147</p></div></div>
-				<div class="people"><img src="__STATIC__/images/timg.jpg" alt=""><div><p>~小槐树</p><p>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;北京</p><p>147万</p></div></div>
-				<div class="people"><img src="__STATIC__/images/timg.jpg" alt=""><div><p>em小柳树</p><p>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;河南</p><p>7.5万</p></div></div>
-				<div class="people"><img src="__STATIC__/images/timg.jpg" alt=""><div><p>小杨树</p><p>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;上海</p><p>47.5万</p></div></div>
-				<div class="people"><img src="__STATIC__/images/timg.jpg" alt=""><div><p>小松树</p><p>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;广州</p><p>14.5万</p></div></div>
-				<div class="people"><img src="__STATIC__/images/timg.jpg" alt=""><div><p>是小怪物</p><p>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;云南</p><p>17.2万</p></div></div>
-				<div class="people"><img src="__STATIC__/images/timg.jpg" alt=""><div><p>小桑树是我</p><p>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;新疆</p><p>11.9万</p></div></div>
-				<div class="people"><img src="__STATIC__/images/timg.jpg" alt=""><div><p>小桑树是我</p><p>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;新疆</p><p>11.9万</p></div></div>
-				<div class="people"><img src="__STATIC__/images/timg.jpg" alt=""><div><p>小桑树是我</p><p>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;新疆</p><p>11.9万</p></div></div>
-				<div class="people"><img src="__STATIC__/images/timg.jpg" alt=""><div><p>小桑树是我</p><p>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;新疆</p><p>11.9万</p></div></div>
-				<div class="people"><img src="__STATIC__/images/timg.jpg" alt=""><div><p>小桑树是我</p><p>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;新疆</p><p>11.9万</p></div></div>
+
+				{volist name ='userArr' id='user'}
+				<div class="people">
+					<img src="__STATIC__/images/timg.jpg" alt="">
+					<div>
+						<p>{$user->nickName != '' ? $user->nickName : $user->username}</p>
+						<p>&nbsp;&nbsp;&nbsp;·&nbsp;&nbsp;{$user->city}</p>
+						<p>{$user->coin}</p>
+					</div>
+				</div>
+				{/volist}
+
 				</div>
 			</div>
 		<!-- 在线人数结束 -->
@@ -94,13 +82,18 @@
 			<div name='lishikj' class="lishikj">
 				<div name='biaoti' class="biaoti"><img src="__STATIC__/images/lishijiesuan.png" alt=""></div>
 				<div name='kaijiang' class="kaijiang scroll_content">
-					<div name='jiang1' class="jiang">
-						<div name='qihao' class="qihao" id="qihao"><p>&nbsp;&nbsp;&nbsp;&nbsp;20180622期开奖</p></div>
-						<div class="jiang-logo"><img src="__STATIC__/images/4.png" alt=""></div>
-						<div class="jiang-logo"><img src="__STATIC__/images/1.png" alt=""></div>
-						<div class="jiang-logo TT"><img src="__STATIC__/images/3.png" alt=""></div>
-					</div>
-					
+					{volist name="codeArr" id="code"}
+						<div name='jiang1' class="jiang">
+							<div name='qihao' class="qihao" id="qihao"><p>&nbsp;&nbsp;&nbsp;&nbsp;{$code.number}期开奖</p></div>
+ 							{volist name="code.data" id='da'}
+ 								{if($i != 3)}
+									<div class="jiang-logo"><img src="__STATIC__/images/{$da}.png" alt=""></div>
+ 								{else}
+ 									<div class="jiang-logo TT"><img src="__STATIC__/images/{$da}.png" alt=""></div>
+ 								{/if}
+							{/volist}
+						</div>
+					{/volist}
 				</div>
 			</div>
 		<!-- 历史结算栏结束 -->

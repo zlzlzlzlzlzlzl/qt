@@ -7,6 +7,7 @@ use think\Session;
 use app\index\model\DataTimeModel;
 use app\index\model\SystemModel as System;
 use app\index\model\UserModel as User;
+use app\index\model\DataModel as Da;
 
 class Index extends Base
 {
@@ -15,7 +16,19 @@ class Index extends Base
      * @return [type] [description]
      */
     public function index() {
-        return $this->fetch('index',['userinfo'=>$this->userinfo]);
+        $Da       = new Da();
+        $U        = new User();
+        $codeData = [];
+        $index    = 0;
+        $codeArr  = $Da->order('number DESC')->limit(0,40)->select();
+        $userArr  = $U->where('online',1)->select();
+        $userCount=count($userArr);
+        foreach ($codeArr as $key => $value) {
+            $codeData[$index]['number'] = $value['number']; 
+            $codeData[$index]['data'] = explode(',',$value['data']);
+            $index++;
+        }
+        return $this->fetch('index',['userinfo'=>$this->userinfo,'codeArr'=>$codeData,'userArr'=>$userArr,'userCount'=>$userCount]);
     }
     /**
      * [twoMethod 展示双骰玩法]

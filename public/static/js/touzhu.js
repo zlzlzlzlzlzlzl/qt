@@ -138,6 +138,7 @@ $(function(){
 
 	//计时器逻辑实现
 $(document).ready(function(){
+	// 获取开奖号
 	getCode();
 	setInterval("getCode()",5000);
 

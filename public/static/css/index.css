@@ -48,7 +48,7 @@ body {
     align-content: stretch;
 }
 .content > div {
-    height:580px;
+    height:651px;
     /*border:1px solid red;*/
 }
 .daojishi {
@@ -195,7 +195,8 @@ body {
 }
 .scroll {
     overflow: auto;
-    overflow-x:hidden;
+    
+
 }
 .people img {
     width: 50px;
@@ -528,7 +529,7 @@ body {
     color: red;
 }
 .gerenzhongxin {
-    width: 50%;
+    width: 69%;
     margin:0 auto;
     height: 1000px;
     /*border:1px solid blue;*/
@@ -544,10 +545,11 @@ body {
     /*border:1px solid red;*/
     border-right: 3px solid rgb(25,63,43);
     border-radius: 4px;
-    width: 40%;
+    width: 25%;
     height: 98%;
     display: flex-wrap;
     display: -webkit-flex-wrap;
+
 }
 .rightiframe {
     margin-left: 4%;
@@ -557,8 +559,9 @@ body {
     display: flex-wrap;
     color: gold;
     text-align: center;
-    padding-top: 200px;
+    padding-top: 50px;
     display: -webkit-flex-wrap;
+
 }
 .leftiframe > div:nth-of-type(1) {
     /*border: 1px solid gold;*/
@@ -857,3 +860,12 @@ ul.countdown a:hover {
     height: 55%;
 
 }
+
+.bet{
+    text-align: left !important;
+}
+
+
+
+
+

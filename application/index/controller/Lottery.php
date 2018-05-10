@@ -92,7 +92,53 @@ class Lottery extends Base{
 
     }
 
+    /**
+     * [getBetList 用户下注记录]
+     * @return [type] [description]
+     */
+    public function getBetList(){
+        $uid = $this->userinfo['id'];
+        $lo = new Bets();
+        $data = $lo->where('uid',$uid)->select();
+        foreach ($data as $key => $value) {
+            $data[$key]['actionTime'] = date('Y-m-d H:i:s',$value->actionTime);
+            $played = '';
+            $sate = '';
+            if($data[$key]['playedId'] < 4){
+              $played .= '两骰';
+              if($value['playedId'] ==1){
+                $played .= '单压';
+              }else if($value['playedId'] ==2){
+                $played .= '二中二' ;
+              }else{
+                $played .= '对子';
+              }
+             
+            }else{
+              $played .= '三骰';
+              if($value['playedId'] ==4){
+                $played .= '单压';
+              }else if($value['playedId'] ==5){
+                $played .= '二中二' ;
+              }else{
+                $played .= '豹子';
+              }
+             }
 
+           if($data[$key]['state'] == 0){
+            $state = "<td style='color:#FFF;'>未开奖</td>";
+           }else if($data[$key]['state'] == 1){
+            $state = "<td style='color:#F00;'>已派奖</td>";
+           }else{
+            $state = "<td style='color:#0F0;'>未中奖</td>";
+           }
+
+            $data[$key]['playedId'] = $played;
+            $data[$key]['state'] = $state; 
+            $value['zjamount'] > 0 ? $data[$key]['zjamount'] = "<td style='color:#F00;'>{$value['zjamount']}</td>":$data[$key]['zjamount'] = "<td style='color:#0F0;'>{$value['zjamount']}</td>";
+        }
+        echo json_encode($data);
+    }
 
 
 

@@ -2,7 +2,7 @@
 <!-- 游戏面板开始 -->
 		<div name="content" class="content">
 		<div name='gerenzhongxin' class="gerenzhongxin">
-			<div name='leftiframe' class="leftiframe">
+			<div name='leftiframe' class="leftiframe" >
 				<div>
 					<div><img src="__STATIC__/images/timg.jpg" alt=""></div>
 					<div>{$userinfo->nickName}</div>
@@ -14,10 +14,34 @@
 					<div><span>未结余额：</span><span>{$userinfo->fcoin}</span></div>
 					<div><span>最近登录：</span><span>{:date('Y-m-d H:i:s',$userinfo->loginTime)}</span></div>
 					<div><span>我的上级代理：</span><span>小松鼠是阿狸</span></div>
-					<div><button>查看我的下级</button><button>充值</button><button>提现</button><button>退出</button></div>
+					<div><button onclick="showBet()">下注记录</button><button onclick="Vrecharge()">充值</button><button>提现</button><button>退出</button></div>
 				</div>
 			</div>
-			<div name='rightiframe' class="rightiframe">此区域为左侧信息栏通用功能实现框，包括充值记录查询，提现记录、盈亏统计、登陆历史、上下级代理情况、下注记录的展示，由于暂无后台不予展示。			</div>
+ 
+			<div name='rightiframe' class="rightiframe scroll_content"  >
+				<div id="bet" class="bet " style="display:none;" >
+					<table class="table"  width='100%'>
+					   <thead>
+					      <tr>
+					      	 <th>时间</th>
+					         <th>订单号</th>
+					         <th>期数</th>
+					         <th>投注号码</th>
+					         <th>玩法</th>
+					         <th>金额</th>
+					         <th>盈亏</th>
+					         <th>状态</th>
+					      </tr>
+					   </thead>
+
+					   <tbody id="betList">
+					     
+					   </tbody>
+					</table>
+
+				</div>
+
+			</div>
 		</div>
 		<!-- 个人中心结束 -->
 	</div>

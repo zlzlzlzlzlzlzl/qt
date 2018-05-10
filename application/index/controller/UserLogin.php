@@ -27,6 +27,11 @@ class UserLogin extends Controller {
 	 * @return [type]           [description]
 	 */
 	public function doLogin(Request $request) {
+		$ip = request()->ip();
+		$url = "http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=json&ip=43.255.39.188";
+		$jsonData = file_get_contents($url);
+		$cityArr = json_decode($jsonData,1);
+		$city = $cityArr['province'];
 		$data = $request->post();
 		$um = new UserModel();
 		$uname = $data['user'];
@@ -46,6 +51,7 @@ class UserLogin extends Controller {
 			Session::set('username',$username,'user_');
 			Session::set('nickName',$nickName,'user_');
 			$msg =  ['code'=>1,'msg'=>'success'];
+			$um->where('id',$userid)->update(['city'=>$city]);
 			return json_encode($msg);
 		} else {
 			$msg = ['code'=>0,'msg'=>'用户名或密码错误i！'];

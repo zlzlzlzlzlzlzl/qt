@@ -394,6 +394,7 @@ function twoAndThree(){
 
 }
 
+
 /**
  * [getCode 获取开奖号码]
  * 实现功能
@@ -419,4 +420,47 @@ function getCode(){
 
 }
 
+/**
+ * [showbet 获取下注记录]
+ * @return {[type]} [description]
+ */
+function showBet(){
+	// layer.load();
+	$.ajax({
+		url:'/getBetList',
+		type:'post',
+		dataType:"json",
+		success:function(data){
+			var codestr = '';
+			for (var i = data.length - 1; i >= 0; i--) {
+				codestr += "<tr>";
+				codestr += "<td>"+data[i].actionTime+"</td>";
+				codestr += "<td>"+data[i].orderId+"</td>";
+				codestr += "<td>"+data[i].actionNo+"</td>";
+				codestr += "<td>"+data[i].actionData+"</td>";
+				codestr += "<td>"+data[i].playedId+"</td>";
+				codestr += "<td>"+data[i].amount+"</td>";
+				codestr += data[i].zjamount;
+				codestr += data[i].state;
+				codestr += "</tr>";
+			}
+				$('#betList').html(codestr);
+				$('#bet').show();
+		},
+		error:function(){
 
+		}
+
+	})
+}
+function Vrecharge(){
+	layer.open({
+      type: 2,
+      title: '鱼虾蟹用户充值。',
+      shadeClose: true,
+      shade: false,
+      maxmin: true, //开启最大化最小化按钮
+      area: ['893px', '600px'],
+      content: '/Vrecharge'
+    });
+}
