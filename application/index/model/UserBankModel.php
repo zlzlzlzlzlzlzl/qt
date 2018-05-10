@@ -4,6 +4,6 @@ namespace app\index\model;
 
 use think\Model;
 
-class UserBank extends Model{
+class UserBankModel extends Model{
      protected $table = 'sea_userbank';
 }

@@ -552,7 +552,7 @@ body {
 
 }
 .rightiframe {
-    margin-left: 4%;
+    margin-left: 2%;
     /*border:1px solid red;*/
     width: 70%;
     height: 98%;
@@ -583,6 +583,7 @@ body {
     display: inline-block;
     padding-left: 8px;
     width:100px;
+    color: #FFF;
 }
 .leftiframe > div:nth-of-type(2) > div > span:nth-of-type(2) {
     color: rgb(80,200,200);
@@ -834,11 +835,11 @@ ul.countdown a:hover {
     width: 100%;
     height: 120px;
     margin-top: 20px;
-    border:1px solid red;
+    /*border:1px solid red;*/
     
 }
 .xiazhuwanfa > div {
-    border:2px solid blue;
+    /*border:2px solid blue;*/
     width:48%;
     height: 100%;
     margin: 0 auto;
@@ -848,22 +849,19 @@ ul.countdown a:hover {
     justify-content: space-around;
 }
 #wfbtn {
-    border:1px solid black;
+    /*border:1px solid black;*/
     width: 50%;
     text-align: center;
     height: 40%;
 }
 #wfcontent {
-    border:1px solid red;
+    /*border:1px solid red;*/
     width:51%;
     text-align: center;
     height: 55%;
 
 }
 
-.bet{
-    text-align: left !important;
-}
 
 
 

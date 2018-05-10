@@ -453,6 +453,10 @@ function showBet(){
 
 	})
 }
+
+/**
+ * [Vrecharge 充值页面弹窗]
+ */
 function Vrecharge(){
 	layer.open({
       type: 2,
@@ -460,7 +464,19 @@ function Vrecharge(){
       shadeClose: true,
       shade: false,
       maxmin: true, //开启最大化最小化按钮
-      area: ['893px', '600px'],
+      area: ['893px', '750px'],
       content: '/Vrecharge'
+    });
+}
+
+function withdraw(){
+	layer.open({
+      type: 2,
+      title: '鱼虾蟹用户提现。',
+      shadeClose: true,
+      shade: false,
+      maxmin: true, //开启最大化最小化按钮
+      area: ['893px', '750px'],
+      content: '/withdraw'
     });
 }

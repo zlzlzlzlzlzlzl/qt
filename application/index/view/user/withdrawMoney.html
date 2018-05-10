@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>用户充值页面</title>
+
+<link rel="stylesheet" type="text/css" href="__STATIC__/css/amazeui.min.css" />
+<link rel="stylesheet" type="text/css" href="__STATIC__/css/main.css" />
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	
+</head>
+<body>
+	<style type="text/css">
+		.er{
+			width: 400px;
+			height: 600px;
+			margin: 0 auto;
+		}
+		.center{
+			text-align: center;
+		}
+		.auto{
+			margin: 0 auto;
+		}
+
+	</style>
+<div class="pay">
+	<!--主内容开始编辑-->
+	<div class="tr_recharge">
+		<div class="tr_rechtext">
+			<p class="te_retit"><img src="__STATIC__/images/coin.png" alt="" />提现中心</p>
+			<p>1.提现时请确保银行卡信息的核对</p>
+			<p>2.提现时间5-10分钟到帐 建议使用四大行进行提现</p>
+			<p>3.提现过程中有疑问请联系客服协助解决</p>
+		</div>
+			<div class="tr_rechbox">
+				<div class="tr_rechhead">
+					<img src="__STATIC__/images/ys_head2.jpg" />
+					<p>充值帐号：
+						<a>{$user.username}</a>
+					</p>
+					<div class="tr_rechheadcion">
+						<img src="__STATIC__/images/coin.png" alt="" />
+						<span>当前余额：<span>{$user.coin}</span></span>
+						<input type="hidden" value="{$user.coin}" id="coin">
+					</div>
+				</div>
+				{if($bankinfo == false)}
+		<form action="" class="am-form" id="doc-vld-msg">
+			<!-- 添加银行卡页 -->
+					<div class="center">
+						<p class="te_retit">请完善银行卡信息</p>
+						<table class="table">
+							<tr>
+								<td>银行名称:</td>
+								<td><input type="text" name="bankName" ></td>
+							</tr>
+							<tr>
+								<td>卡号:</td>
+								<td><input type="text" name="account" ></td>
+							</tr>
+							<tr>
+								<td>持卡人:</td>
+								<td><input type="text" name="name" ></td>
+							</tr>
+							<tr>
+								<td>开户行:</td>
+								<td><input type="text" name="counName" ></td>
+							</tr>
+
+						</table>
+					</div>
+					</form>
+					<input type="button" onclick="subBankInfo()" value="添加银行卡" class="tr_pay am-btn auto" />
+			<!-- 添加银行卡结束 -->
+				{else}  
+				<!-- 提现表单 -->
+				<form action="" class="am-form" id="withdrawMoney">
+					<div class="center">
+
+						<table class="table">
+							<tr>
+								<td>金额:</td>
+								<td><input type="number" id="withdraw-amount" name="amount"></td>
+							</tr>
+							<tr>
+								<td>银行卡:</td>
+								<td><select name="userBank">
+									{volist name="$bankinfo" id='bk'}
+									<option value="{$bk.id}" >{$bk.bankName} - {$bk.account}</option>
+									{/volist}
+								</select></td>
+							</tr>
+							
+						</table>
+					
+					</div>
+					</form>
+					<!-- 提现结束 -->
+					<input type="button" onclick="subwithdraw()" value="申请提现" class="tr_pay am-btn auto" />
+				{/if}
+			</div>
+			<div class="tr_paybox center">
+			</div>
+		
+	</div>
+</div>
+
+<script type="text/javascript" src="__STATIC__/js/jquery.min.js"></script>
+<script type="text/javascript" src="__STATIC__/js/amazeui.min.js"></script>
+<script type="text/javascript" src="__STATIC__/js/ui-choose.js"></script>
+<script src="__STATIC__/js/function.js"></script>
+<script src="__STATIC__/js/layer.js"></script>
+<script type="text/javascript">
+	function recharge(){
+		var index = layer.alert('已完成充值!工作人员正在审核!10分支内未到帐请联系客服!', {icon: 6},function(){
+			window.parent.location.reload();
+			layer.close(index)
+			
+		});
+	}
+
+	function subwithdraw(){
+		var amount = $('#withdraw-amount').val();
+		var coin = $('#coin').val();
+		if(amount > coin){
+			layer.msg('您的余额不足',{icon: 4});
+		}else{
+		$.ajax({
+			url:"/withdrawMoney",
+			type:'post',
+			data:$('#withdrawMoney').serialize(),
+			success:function(data){
+				if(data == 'yes'){
+					var index = layer.alert('申请提现成功!10分支内未到帐请联系客服!',{icon: 6},function(){
+						window.parent.location.reload();
+						layer.close(index)
+					})
+				}else if(data == 'no'){
+					var index = layer.alert('网络故障 稍后再试',{icon: 5},function(){
+						window.parent.location.reload();
+						layer.close(index)
+					})
+				}else{
+					var index = layer.alert(data,{icon: 5},function(){
+						window.parent.location.reload();
+						layer.close(index)
+					})
+				}
+			},	
+			error:function(data){
+
+			}
+		})
+		}
+	}
+
+
+	function subBankInfo(){
+		$.ajax({
+			url:"/setUserBank",
+			type:"post",
+			data:$('#doc-vld-msg').serialize(),
+			success:function(data){
+				if(data == 'yes'){
+					var index = layer.alert('银行卡添加成功,点击继续充值',{icon: 6},function(){
+						window.location.reload();
+						layer.close(index)
+					})
+				}else{
+					var index = layer.alert('网络故障 稍后再试',{icon: 5},function(){
+						window.parent.location.reload();
+						layer.close(index)
+					})
+				}
+			},
+			error:function(){
+
+			}
+
+		});
+	}
+</script>
+
+</body>
+</html>

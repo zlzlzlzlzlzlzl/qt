@@ -1,4 +1,5 @@
 {include file='common/header'}
+	<link rel="stylesheet" href="__STATIC__/css/styles.css" type="text/css">
 <!-- 游戏面板开始 -->
 		<div name="content" class="content">
 		<div name='gerenzhongxin' class="gerenzhongxin">
@@ -13,24 +14,24 @@
 					<div><span>余额：</span><span>{$userinfo->coin}</span></div>
 					<div><span>未结余额：</span><span>{$userinfo->fcoin}</span></div>
 					<div><span>最近登录：</span><span>{:date('Y-m-d H:i:s',$userinfo->loginTime)}</span></div>
-					<div><span>我的上级代理：</span><span>小松鼠是阿狸</span></div>
-					<div><button onclick="showBet()">下注记录</button><button onclick="Vrecharge()">充值</button><button>提现</button><button>退出</button></div>
+					<!-- <div><span>我的上级代理：</span><span>小松鼠是阿狸</span></div> -->
+					<div><button onclick="showBet()">下注记录</button><button onclick="Vrecharge()">充值</button><button onclick="withdraw()">提现</button><button onclick="window.location.href = '{:url(\'/logout\')}'">退出</button></div>
 				</div>
 			</div>
  
-			<div name='rightiframe' class="rightiframe scroll_content"  >
-				<div id="bet" class="bet " style="display:none;" >
-					<table class="table"  width='100%'>
-					   <thead>
+			<div name='rightiframe' class="rightiframe "  >
+				<div id="bet" class="bet container scroll_content" style="display:none;" >
+					<table class="table zebra "  width='79%'>
+					   <thead class='bettr'>
 					      <tr>
-					      	 <th>时间</th>
-					         <th>订单号</th>
-					         <th>期数</th>
-					         <th>投注号码</th>
-					         <th>玩法</th>
-					         <th>金额</th>
-					         <th>盈亏</th>
-					         <th>状态</th>
+					      	 <td class="td1">时间</td>
+					         <td class="td2">订单号</td>
+					         <td class="td3">期数</td>
+					         <td class="td4">投注号码</td>
+					         <td class="td5">玩法</td>
+					         <td class="td6">金额</td>
+					         <td class="td7">盈亏</td>
+					         <td class="td8">状态</td>
 					      </tr>
 					   </thead>
 

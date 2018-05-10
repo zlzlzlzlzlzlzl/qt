@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>用户充值页面</title>
+
+<link rel="stylesheet" type="text/css" href="__STATIC__/css/amazeui.min.css" />
+<link rel="stylesheet" type="text/css" href="__STATIC__/css/main.css" />
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+	
+</head>
+<body>
+	<style type="text/css">
+		.er{
+			width: 400px;
+			height: 600px;
+			margin: 0 auto;
+		}
+		.center{
+			text-align: center;
+		}
+		.auto{
+			margin: 0 auto;
+		}
+
+	</style>
+<div class="pay">
+	<!--主内容开始编辑-->
+	<div class="tr_recharge">
+		<div class="tr_rechtext">
+			<p class="te_retit"><img src="__STATIC__/images/coin.png" alt="" />充值中心</p>
+			<p>1.选择手动充值时充值会有延时</p>
+			<p>2.充值过程中有疑问请联系客服协助解决</p>
+			<p>3.建议使用在线充值</p>
+		</div>
+		<form action="" class="am-form" id="doc-vld-msg">
+			<div class="tr_rechbox">
+				<div class="tr_rechhead">
+					<img src="__STATIC__/images/ys_head2.jpg" />
+					<p>充值帐号：
+						<a>{$user.username}</a>
+					</p>
+					<div class="tr_rechheadcion">
+						<img src="__STATIC__/images/coin.png" alt="" />
+						<span>当前余额：<span>{$user.coin}</span></span>
+					</div>
+				</div>
+				{if($bankinfo->type == 2)}
+			<!-- 二维码区域 -->
+					<div class="center">
+						<!-- <div>
+							<span>{$bankinfo.bankName}</span>
+						</div> -->
+						<div class="center">
+							<img src="{$bankinfo.numOrImg}" class="am-img-responsive er" alt="{$bankinfo.bankName}">
+						</div>
+					</div>
+			<!-- 二维码区域结束 -->
+				{else}
+					<div class="center">
+
+						<table class="table">
+							<tr>
+								<td>银行:</td>
+								<td>{$bankinfo.bankName}</td>
+							</tr>
+							<tr>
+								<td>卡号:</td>
+								<td>{$bankinfo.numOrImg}</td>
+							</tr>
+							<tr>
+								<td>姓名:</td>
+								<td>{$bankinfo.name}</td>
+							</tr>
+
+						</table>
+					
+					</div>
+				{/if}
+			</div>
+			<div class="tr_paybox center">
+				<input type="button" onclick="recharge()" value="支付完成" class="tr_pay am-btn auto" />
+			</div>
+		</form>
+	</div>
+</div>
+
+<script type="text/javascript" src="__STATIC__/js/jquery.min.js"></script>
+<script type="text/javascript" src="__STATIC__/js/amazeui.min.js"></script>
+<script type="text/javascript" src="__STATIC__/js/ui-choose.js"></script>
+<script src="__STATIC__/js/function.js"></script>
+<script src="__STATIC__/js/layer.js"></script>
+<script type="text/javascript">
+	function recharge(){
+		var index = layer.alert('已完成充值!工作人员正在审核!10分支内未到帐请联系客服!', {icon: 6},function(){
+			window.parent.location.reload();
+			layer.close(index)
+			
+		});
+	}
+</script>
+
+</body>
+</html>

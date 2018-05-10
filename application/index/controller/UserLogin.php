@@ -51,7 +51,8 @@ class UserLogin extends Controller {
 			Session::set('username',$username,'user_');
 			Session::set('nickName',$nickName,'user_');
 			$msg =  ['code'=>1,'msg'=>'success'];
-			$um->where('id',$userid)->update(['city'=>$city]);
+			// 更新城市和在线状态
+			$um->where('id',$userid)->update(['city'=>$city,'online'=>1]);
 			return json_encode($msg);
 		} else {
 			$msg = ['code'=>0,'msg'=>'用户名或密码错误i！'];
@@ -64,6 +65,8 @@ class UserLogin extends Controller {
 	 */
 	public function logOut() {
 		Session::flush();
+		$Us = new UserModel();
+		$Us->where('id',$this->userinfo['id'])->update('online',0);
 		return $this->error('退出成功！',url('/tologin'),30);
 	}
 }

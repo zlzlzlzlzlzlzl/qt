@@ -28,3 +28,7 @@ Route::post('getCode','index/lottery/getCode');
 Route::post('getUserCoin','index/index/getCoin');
 Route::post('getBetList','index/Lottery/getBetList');
 Route::get('Vrecharge','index/User/userRecharge');
+Route::post('inRecharge','index/User/RechargeState');
+Route::get('withdraw','index/User/withdrawMoneyV');
+Route::post('withdrawMoney','index/User/withdrawMoney');
+Route::post('setUserBank','index/User/setUserBank');
