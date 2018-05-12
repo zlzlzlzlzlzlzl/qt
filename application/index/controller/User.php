@@ -81,7 +81,7 @@ class User extends Base
 	public function withdrawMoney(request $request){
 		$data = $request->post();
 		if($data['amount'] > $this->userinfo['coin']){
-			exit(json_encode('您的余额不足'));
+			die('您的余额不足');
 		}
 		// 把申请的余额减去 增加冻结金额
 		$Us = new Us();

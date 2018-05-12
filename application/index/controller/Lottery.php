@@ -6,6 +6,7 @@ use think\Session;
 use app\index\model\BetsModel as Bets;
 use app\index\model\UserModel as User;
 use app\index\model\DataModel as Lo;
+use app\index\model\UserLogModel as Log;
 
 class Lottery extends Base{
 
@@ -72,6 +73,15 @@ class Lottery extends Base{
             $User = new User();
             $User->where('id',$this->userinfo['id'])->setDec('coin',$money);//-余额
             $User->where('id',$this->userinfo['id'])->setInc('fcoin',$money);//+冻结金额
+            //插入用户日志
+            $lo = new Log();
+            $log = [];
+            $log['uid']        =$this->userinfo['id'];
+            $log['coin']     =$money;
+            $log['userCoin']   =$this->userinfo['coin'];
+            $log['actionTime'] =time();
+            $log['Type']       =5;
+            $lo->insert($log);
         	return "下注成功!";
         }else{
         	return "下注失败!网络故障!";

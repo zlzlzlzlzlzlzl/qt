@@ -468,7 +468,10 @@ function Vrecharge(){
       content: '/Vrecharge'
     });
 }
-
+/**
+ * [withdraw 提现页面弹窗]
+ * @return {[type]} [description]
+ */
 function withdraw(){
 	layer.open({
       type: 2,

@@ -59,7 +59,7 @@ $(function(){
                			layer.msg(data);
             			},
             			error:function(data){
-                		$.messager.alert('错误',data.msg);
+                		layer.msg('错误',{icon:5});
             		}
         			});
 				},function(){
@@ -88,7 +88,7 @@ $(function(){
                			layer.msg(data);
             			},
             			error:function(data){
-                		$.messager.alert('错误',data.msg);
+                		layer.msg('错误',{icon:5});
             		}
         			});
 			},function(){
