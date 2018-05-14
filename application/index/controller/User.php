@@ -102,10 +102,23 @@ class User extends Base
 	}
 
 
+
+	public function checkOnline(){
+		$Us  = new Us();
+		$userinfo = $Us->where('id',$this->userinfo['id'])->find();
+		if($this->userinfo['session_id'] !== $userinfo['session_id']){
+			return 'error';
+		}else{
+			return 'yes';
+		}
+	}
+
+
+
 }
 
 
-
+	
 
 
 

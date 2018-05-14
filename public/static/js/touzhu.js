@@ -141,7 +141,7 @@ $(document).ready(function(){
 	// 获取开奖号
 	getCode();
 	setInterval("getCode()",5000);
-
+	setInterval("checkOline()",5000);
 	});
 	$('#wfbtn > button').on('click',function(){
 		if(!$(this).hasClass('btn-danger')) {

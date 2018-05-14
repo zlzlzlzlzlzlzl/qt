@@ -16,6 +16,7 @@ class Base extends Controller {
 	    $sys = new System();
         $data = $sys::all();
         $webData = array();
+		 $Us = new UserModel();
         foreach ($data as $key => $value) {
             $webData[$value['key']] = $value['value'];
         }
@@ -23,11 +24,21 @@ class Base extends Controller {
 		$um = new UserModel();
         $this->userinfo = $um->where('id',session('userid','','user_'))->find();
 		if(Session::has('username','user_') && Session::has('userid','user_')) {
-			return ;
+
+			$ss = $Us->where('id',Session::get('userid','user_'))->find();
+			if($ss['session_id'] !== session_id()){
+				return $this->redirect('/tologin');
+				// return $this->error('您已在别处登录！',url('/tologin'),30);
+			}else{
+
+				return ;
+			}
 		} else {
-			return $this->error('请先登录！',url('/tologin'),30);
+				return $this->redirect('/tologin');
+			
 		}
 	}
+
 
 	/**
 	 * [getOrderId 生成订单号]

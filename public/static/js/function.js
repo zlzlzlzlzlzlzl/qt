@@ -415,6 +415,7 @@ function getCode(){
 		},
 		error:function(){
 
+			
 		}
 	});
 
@@ -482,4 +483,27 @@ function withdraw(){
       area: ['893px', '750px'],
       content: '/withdraw'
     });
+}
+
+
+/**
+ * [checkOline 检查用户还在线]
+ * @return {[type]} [description]
+ */
+function checkOline(){
+	$.ajax({
+		url:'/checkOnline',
+		type:'post',
+		dataType:"json",
+		success:function(data){
+			if(data != 'yes'){
+				layer.alert('您已在别处登录!请重新登录',{icon:3,close:false},function(){
+					window.location.reload();
+				});
+			}
+		},
+		error:function(){
+
+		}
+	})
 }
