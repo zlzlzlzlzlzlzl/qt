@@ -33,3 +33,6 @@ Route::get('withdraw','index/User/withdrawMoneyV');
 Route::post('withdrawMoney','index/User/withdrawMoney');
 Route::post('setUserBank','index/User/setUserBank');
 Route::post('checkOnline','index/User/checkOnline');
+Route::post('getTime','index/index/getTime');
+Route::post('checkTime','index/index/checkTime');
+Route::get('404','index/UserLogin/off');

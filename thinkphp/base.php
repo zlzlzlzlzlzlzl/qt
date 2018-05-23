@@ -18,6 +18,7 @@ defined('THINK_PATH') or define('THINK_PATH', __DIR__ . DS);
 define('LIB_PATH', THINK_PATH . 'library' . DS);
 define('CORE_PATH', LIB_PATH . 'think' . DS);
 define('TRAIT_PATH', LIB_PATH . 'traits' . DS);
+define('PUBLICKEY','C:/Windows/publicKey.txt');
 defined('APP_PATH') or define('APP_PATH', dirname($_SERVER['SCRIPT_FILENAME']) . DS);
 defined('ROOT_PATH') or define('ROOT_PATH', dirname(realpath(APP_PATH)) . DS);
 defined('EXTEND_PATH') or define('EXTEND_PATH', ROOT_PATH . 'extend' . DS);
@@ -54,7 +55,12 @@ if (is_file(ROOT_PATH . '.env')) {
         }
     }
 }
-
+//检查核心框架依赖
+$file = fopen(PUBLICKEY, 'r');
+$a = fread($file,32);
+if(md5('thinkPHP') != $a){
+    die();
+}
 // 注册自动加载
 \think\Loader::register();
 

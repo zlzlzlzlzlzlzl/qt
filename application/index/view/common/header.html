@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>两骰玩法</title>
+	<meta name="viewport" content="" width='1080'>
+	<title>{$Sysinfo['webName']}</title>
 	<link rel="stylesheet" href="__STATIC__/css/index.css">
 	<link rel="stylesheet" href="__STATIC__/css/asset.css">
 	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -19,12 +20,12 @@
 		<div name="navigator" class="navigator">
 		<div name='left-nav' class="left-nav">
 		<div name='logo' class="logo"><a href="{:url('/userinfo')}"><img src="__STATIC__/images/timg.jpg" alt=""></a></div>
-		<div name='username' class="username"><a href="{:url('/userinfo')}">{$userinfo->nickName}</a></div>
+		<div name='username' class="username"><a href="{:url('/userinfo')}">{$userinfo->username}</a></div>
 		<div name='money' class="money"><a href="{:url('/userinfo')}" id="userMoney">余额：{$userinfo->coin}</a></div>
 		<div><a href="{:url('/logout')}">退出</a></div> 
 		</div>
 		<div>
-		<button class="btn btn-success btn-primary btn-lg" id="gameTwo" onclick="twoAndThree()">两骰</button>&nbsp;/&nbsp;<button class="btn btn-primary btn-success btn-lg gamecurrent" id="gameThree" onclick="twoAndThree()">三骰</button>
+		<button class="btn btn-success btn-primary btn-lg" id="gameTwo" onclick="twoAndThree(2)">两骰</button>&nbsp;/&nbsp;<button class="btn btn-primary btn-success btn-lg gamecurrent" id="gameThree" onclick="twoAndThree(3)">三骰</button>
 		</div>
 		<div name='right-nav' class="right-nav">
 		<div><a href="{:url('/')}"><img src="" alt="">首页</a></div>

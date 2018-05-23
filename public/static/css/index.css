@@ -2,7 +2,10 @@ body {
     background-image:url(../images/bg.png);
     background-repeat:no-repeat;
     background-position:center;
+    position:relative;
+    min-width:1080px;
     background-attachment:fixed;
+    -webkit-background-attachment:fixed;
     background-size:100% 100%;
     -webkit-background-size:100% 100%;
     -moz-background-size:100% 100%;
@@ -301,7 +304,7 @@ body {
     width: 15%;
     height:100%;
     display: flex;
-    margin-left:20px;
+    margin-left:6%;
     -webkit-justify-content: space-around;
     justify-content: space-around;
     flex-wrap: wrap;

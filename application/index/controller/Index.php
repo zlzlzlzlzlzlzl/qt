@@ -28,28 +28,28 @@ class Index extends Base
             $codeData[$index]['data'] = explode(',',$value['data']);
             $index++;
         }
-        return $this->fetch('index',['userinfo'=>$this->userinfo,'codeArr'=>$codeData,'userArr'=>$userArr,'userCount'=>$userCount]);
+        return $this->fetch('index',['userinfo'=>$this->userinfo,'codeArr'=>$codeData,'userArr'=>$userArr,'userCount'=>$userCount,'Sysinfo'=>$this->Sysinfo]);
     }
     /**
      * [twoMethod 展示双骰玩法]
      * @return [type] [description]
      */
     public function twoMethod() {
-    	return $this->fetch('twoMethod',['userinfo'=>$this->userinfo]);
+        return $this->fetch('twoMethod',['userinfo'=>$this->userinfo,'Sysinfo'=>$this->Sysinfo]);
     }
     /**
      * [getGameInfo 游戏简介]
      * @return [type] [description]
      */
     public function getGameInfo() {
-    	return $this->fetch('gameinfo',['userinfo'=>$this->userinfo]);
+        return $this->fetch('gameinfo',['userinfo'=>$this->userinfo,'Sysinfo'=>$this->Sysinfo]);
     }
     /**
      * [getUserInfo 个人中心]
      * @return [type] [description]
      */
     public function getUserInfo() {
-    	return $this->fetch('userinfo',['userinfo'=>$this->userinfo]);
+        return $this->fetch('userinfo',['userinfo'=>$this->userinfo,'Sysinfo'=>$this->Sysinfo]);
     }
 
     /**
@@ -62,12 +62,15 @@ class Index extends Base
         $dm  = new DataTimeModel();
         $h   = date('H:i:s'); 
         $res = $dm->where('actionTime','>',$h)->limit(0,1)->find();
+        
         $n   = date('Y');
         $y   = sprintf('%02s',  date('m'));
         $d   = sprintf('%02s',  date('d'));
         $c   = sprintf('%03s', $res->actionNo);
         $actionNo = $n.$y.$d.$c;
-        $data = ['qihao'=>$actionNo,'kjsj'=>$res->actionTime];
+        $dates = date('m/d/Y',time());
+        $data = ['qihao'=>$actionNo,'kjsj'=>$res->actionTime,'dates'=>$dates];
+        // print_r($data);exit;
          if($request->isAjax()){
             return json_encode($data);
         }else{
@@ -110,5 +113,34 @@ class Index extends Base
         echo json_encode($coin);
     }
 
+    /**
+     * [getTime 获取毫秒级别的时间戳]
+     * @return [type] [description]
+     */
+      function getTime(){  
+            $time = explode (" ", microtime () );   
+            $time = $time [1] . ($time [0] * 1000);   
+            $time2 = explode ( ".", $time );   
+            $time = $time2 [0];  
+            if(request()->isAjax()){
+                echo $time;
+            }else{
+                return $time;  
+            }
+    }
+
+    /**
+     * [checkTime 检查封单时间]
+     * @return [type] [description]
+     */
+    function checkTime(){   
+        $time = time();
+        $action     = date('Y-m-d 09:00:00',$time);
+        $end        = date('Y-m-d 22:00:00',$time);
+        $actionTime = strtotime($action);
+        $endTime    = strtotime($end);
+        return $time < $actionTime || $time > $endTime ?false:true;
+
+    }
 
 }

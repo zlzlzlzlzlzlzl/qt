@@ -46,7 +46,7 @@ class Lottery extends Base{
         }
         // 判断余额是否足够支付
         if($this->userinfo['coin'] < $money){
-            die(json_encode($this->userinfo['coin'].'您的余额不足,请立即充值'.$money));
+            die(json_encode('您的余额不足,请立即充值'));
         }
         // 判断期号是否正确以及下注时间是否是合法下注时间
         $in = new \app\index\controller\Index;

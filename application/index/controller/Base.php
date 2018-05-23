@@ -21,6 +21,10 @@ class Base extends Controller {
             $webData[$value['key']] = $value['value'];
         }
         $this->Sysinfo = $webData;
+        if($this->Sysinfo['webState'] == 0){
+        	return $this->redirect('/404');
+        }
+
 		$um = new UserModel();
         $this->userinfo = $um->where('id',session('userid','','user_'))->find();
 		if(Session::has('username','user_') && Session::has('userid','user_')) {
@@ -38,6 +42,7 @@ class Base extends Controller {
 			
 		}
 	}
+
 
 
 	/**

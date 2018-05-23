@@ -145,6 +145,7 @@ function getTouZhu() {
 	});
 }
 function getQiHao() {//获取当前期号和开奖时间
+
 	var qihao;
 		$.ajax({
           	url:"/getqihao",
@@ -155,6 +156,8 @@ function getQiHao() {//获取当前期号和开奖时间
     			qihao = $.parseJSON(data);
     		},
     		error:function(data){
+    			console.log(data);
+
         	
    		}
 			});
@@ -189,19 +192,27 @@ function getYaZhuBtn() {
 	});
 	return t;
 }
+
+
+
+
 function cDate() {
 			var qihao  = getQiHao();
+			// alert(qihao.time);
+			// console.log(qihao);
 			var kjsj   = qihao.kjsj;
-			var myDate = new Date();
-			//获取当前年
-			var year   = myDate.getFullYear();
-			//获取当前月
-			var month  = myDate.getMonth() + 1;
-			//获取当前日
-			var date   = myDate.getDate();
-			var h      = myDate.getHours(); //获取当前小时数(0-23)
-			var m      = myDate.getMinutes(); //获取当前分钟数(0-59)'4/28/2019 11:02:00'
-			var str    = month+'/'+date+'/'+year+' '+kjsj;
+			// var myDate = new Date();
+			// //获取当前年
+			// var year   = myDate.getFullYear();
+			// //获取当前月
+			// var month  = myDate.getMonth() + 1;
+			// //获取当前日
+			// var date   = myDate.getDate();
+			// var h      = myDate.getHours(); //获取当前小时数(0-23)
+			// var m      = myDate.getMinutes(); //获取当前分钟数(0-59)'4/28/2019 11:02:00'
+			// var str    = month+'/'+date+'/'+year+' '+kjsj;
+			var str    = qihao.dates+' '+qihao.kjsj;
+			// alert(str);
 			var qi     = qihao.qihao;
 			var data   = {sj:str,qi:qi};
     	return data;
@@ -377,20 +388,35 @@ function erzhonger(code,money,qihao,playedId){
  * [two 切换两骰和三骰]
  * @return {[type]} [description]
  */
-function twoAndThree(){
-	$('.TT').toggle();
-	$('#two').toggle();
-	$('#three').toggle();
-	$('#gameTwo').toggleClass('gamecurrent');
-	$('#gameThree').toggleClass('gamecurrent');
-	if($('#gameTwo').hasClass('gamecurrent')){
-		$('.twwf').addClass('played');
-		$('.thwf').removeClass('played');
-	}else{
-		$('.thwf').addClass('played');
-		$('.twwf').removeClass('played');
-	}
+function twoAndThree(type){
+	// $('#three').toggle();
+	// $('#gameTwo').toggleClass('gamecurrent');
+	// $('#gameThree').toggleClass('gamecurrent');
+	// if($('#gameTwo').hasClass('gamecurrent')){
+	// 	$('.twwf').addClass('played');
+	// 	$('.thwf').removeClass('played');
+	// }else{
+	// 	$('.thwf').addClass('played');
+	// 	$('.twwf').removeClass('played');
+	// }
 
+	if(type == 2){
+		$('.TT').hide();
+		$('#gameTwo').addClass('gamecurrent');
+		$('#gameThree').removeClass('gamecurrent');
+	    $('#two').show();
+	    $('#three').hide();
+	    $('.twwf').addClass('played');
+	    $('.thwf').removeClass('played');
+	}else if(type == 3){
+		$('.TT').show();
+		$('#gameTwo').removeClass('gamecurrent');
+		$('#gameThree').addClass('gamecurrent');
+	    $('#two').hide();
+	    $('#three').show();
+	    $('.twwf').removeClass('played');
+	    $('.thwf').addClass('played');
+	}
 
 }
 
@@ -497,7 +523,7 @@ function checkOline(){
 		dataType:"json",
 		success:function(data){
 			if(data != 'yes'){
-				layer.alert('您已在别处登录!请重新登录',{icon:3,close:false},function(){
+				layer.alert('登陆失效!请重新登录',{icon:3,close:false},function(){
 					window.location.reload();
 				});
 			}
@@ -506,4 +532,26 @@ function checkOline(){
 
 		}
 	})
+}
+
+/**
+ * 判断服务器时间是是否处于封盘时间
+ * @return {[type]} [description]
+ */
+function checkTime(){
+	var off ;
+	$.ajax({
+		url:'/checkTime',
+		type:'POST',
+		dataType:'json',
+		async:false,
+		success:function(data){
+			off = data;
+		},
+		error:function(){
+			off = false;
+		}
+	})
+	return off;
+
 }

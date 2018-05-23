@@ -18,8 +18,34 @@ class UserLogin extends Controller {
 	 * @return [type]           [description]
 	 */
 	public function toRegister(Request $request) {
+		$um = new UserModel();
 		$data = $request->post();
-		print_r($data);
+		// print_r($data);
+		if($data['username'] == '' || $data['pwd'] == '' || ($data['pwd'] != $data['repassword'])) {
+			return '注册失败，请安照正常程序注册！';
+		}
+		$r = $um->where('username',$data['username'])->find();
+		if($r) {
+			echo '帐号已被注册！请重新输入帐号！';
+			return;
+		}
+		$d = array(
+		'username' => $data['username'],
+		'password' => md5($data['pwd']),
+		'coinPassword' => md5($data['pwd']),
+		'phone' => $data['phone'],
+		'qq' => $data['qq'],
+		'registerTime' => time()
+				);
+			$res = $um->insert($d);
+			if($res){
+				echo '注册成功！取款密码默认和注册密码一致，请及时修改！';
+				return;
+			}else {
+				echo 'error 404 notfound';
+				return;
+			}
+
 	}
 	/**
 	 * [doLogin 登陆逻辑]
@@ -28,7 +54,7 @@ class UserLogin extends Controller {
 	 */
 	public function doLogin(Request $request) {
 		$ip = request()->ip();
-		$url = "http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=json&ip=43.255.39.188";
+		$url = "http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=json&ip=".$ip;
 		$jsonData = file_get_contents($url);
 		$cityArr = json_decode($jsonData,1);
 		$city = $cityArr['province'];
@@ -68,6 +94,11 @@ class UserLogin extends Controller {
 		$Us->where('id',Session::get('userid','user_'))->update(['online'=>0]);
 		Session::flush();
 		return $this->error('退出成功！',url('/tologin'),30);
+	}
+
+
+		public function off(){
+		return $this->fetch('error/404');
 	}
 }
 ?>

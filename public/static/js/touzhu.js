@@ -151,11 +151,24 @@ $(document).ready(function(){
 			$(this).siblings().addClass('btn-success');
 		}
 	});
-$('.countdown').downCount({
-		date: cDate().sj,
-		offset:+8,
-		qi:cDate().qi
-	},function() {
-		window.location.reload();
-	});
+
+
+if(checkTime()){
+	// alert(checkTime());
+	$('.countdown').downCount({
+			date: cDate().sj,
+			offset:+8,
+			qi:cDate().qi
+		},function() {
+			window.location.reload();
+		});
+}else{
+	$('#kjqihao').text('22:00-09:00');
+	$('.minutes').text('封');
+	$('.seconds').text('盘');
+
+}
+
+
+
 });

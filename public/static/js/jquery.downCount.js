@@ -31,12 +31,29 @@
         var currentDate = function () {
             // get client's current date
             var date = new Date();
+            var time;
+            $.ajax({
+                url:'/getTime',
+                type:'POST',
+                dataType:'json',
+                async:false,
+                success:function(data){
+                    time = data;
+                },
+                error:function(){
 
+                }
+            })
+            // console.log(time);
             // turn date to utc
-            var utc = date.getTime() + (date.getTimezoneOffset() * 60000);
-
+            // var utc = date.getTime() + (date.getTimezoneOffset() * 60000);
+            // alert(date.getTimezoneOffset());
+             var utc = parseInt(time) + (date.getTimezoneOffset() * 60000);
+             // alert(settings.time);
+             // console.log(utc);
             // set new Date object
             var new_date = new Date(utc + (3600000*settings.offset))
+             // console.log(new_date);
 
             return new_date;
         };
@@ -47,6 +64,7 @@
         function countdown () {
             var target_date = new Date(settings.date), //设置到期时间
                 current_date = currentDate(); // 获取当前时间
+                // current_date = settings.time;
 
             // 计算倒计时时间
             var difference = target_date - current_date;
