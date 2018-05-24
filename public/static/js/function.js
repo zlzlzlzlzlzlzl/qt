@@ -13,20 +13,20 @@ function addTouzhu(i,w) {
 			if(w == 'danya') {
 				console.log('现在是2骰单压');
 				if(zd.length == 0){
-					z.append('<button class="btn btn-danger" id="qingkong" onClick="dropTouzhu()">清空</button>');
+					// z.append('<button class="btn btn-danger" id="qingkong" onClick="dropTouzhu()">清空</button>');
 				}
 				playedID = 1;
 				z.append(a);
 			}else if(w == 'erzhonger') {
 				if(zd.length == 0){
-					z.append('<button class="btn btn-danger" id="qingkong" onClick="dropTouzhu()">清空</button>');
+					// z.append('<button class="btn btn-danger" id="qingkong" onClick="dropTouzhu()">清空</button>');
 				}
 				playedID = 2;
 				z.append(a);
 				console.log('现在是2骰二中二');
 			}else if(w == 'duizi') {
 				if(zd.length == 0){
-					z.append('<button class="btn btn-danger" id="qingkong" onClick="dropTouzhu()">清空</button>');
+					// z.append('<button class="btn btn-danger" id="qingkong" onClick="dropTouzhu()">清空</button>');
 				}
 				playedID = 3;
 				z.append(a);
@@ -40,21 +40,21 @@ function addTouzhu(i,w) {
 		// $('.touzhukuang').append(a);
 		if(w == 'danya') {
 			if(zd.length == 0){
-					z.append('<button class="btn btn-danger" id="qingkong" onClick="dropTouzhu()">清空</button>');
+					// z.append('<button class="btn btn-danger" id="qingkong" onClick="dropTouzhu()">清空</button>');
 				}
 				playedID = 4;
 			z.append(a);
 			console.log('现在是3骰单压');
 		}else if(w == 'erzhonger') {
 			if(zd.length == 0){
-					z.append('<button class="btn btn-danger" id="qingkong" onClick="dropTouzhu()">清空</button>');
+					// z.append('<button class="btn btn-danger" id="qingkong" onClick="dropTouzhu()">清空</button>');
 				}
 				playedID = 5;
 			z.append(a);
 			console.log('现在是3骰二中二');
 		}else if(w == 'baozi') {
 			if(zd.length == 0){
-					z.append('<button class="btn btn-danger" id="qingkong" onClick="dropTouzhu()">清空</button>');
+					// z.append('<button class="btn btn-danger" id="qingkong" onClick="dropTouzhu()">清空</button>');
 				}
 				playedID = 6;
 			z.append(a);

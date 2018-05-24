@@ -22,9 +22,9 @@
 			</div>
 			<div name='shangqi' class="shangqi">
 				<div name='' class="" id="shangqifont">上期开奖号为：</div>
-				<div><img src="__STATIC__/images/4.png" alt="" id="data 1"></div>
-				<div><img src="__STATIC__/images/4.png" alt=""></div>
-				<div class="TT"><img src="__STATIC__/images/4.png" alt=""></div>
+				<div><img src="" alt="" id="data 1"></div>
+				<div><img src="" alt=""></div>
+				<div class="TT"><img src="" alt=""></div>
 			</div>
 		</div>
 	<!-- 倒计时+上期结束 -->
@@ -58,15 +58,31 @@
 			</div>
 		<!-- 在线人数结束 -->
 		<!-- -->
-			<div name='yazhuma' class='yazhuma'>
-				<div class="choumaimg choumacurrent" money='10'><img src="__STATIC__/images/10.png" alt=""></div>
-				<div class="choumaimg" money='50'><img src="__STATIC__/images/50.png" alt=""></div>
-				<div class="choumaimg" money='100'><img src="__STATIC__/images/100.png" alt=""></div>
-				<div class="choumaimg" money='500'><img src="__STATIC__/images/500.png" alt=""></div>
-				<div class="choumaimg" money='1000'><img src="__STATIC__/images/1000.png" alt=""></div>
-				<div class="choumaimg" money='10000'><img src="__STATIC__/images/10000.png" alt=""></div>
-				<div><button class="btn btn-warning " id="xiazhubtn">投注</button></div>
+		<div class="xiazhuwanfa" id="three">
+			<div>
+				<div id="wfbtn" class="thwf played">
+					<button class="btn btn-danger "  id="danya" data-id ='4'>单压</button>
+					<button class="btn btn-success " id="erzhonger" data-id ='5' >二中二</button>
+					<button class="btn btn-success " id="baozi" data-id ='6'>豹子</button>
+				</div>
+					<button class="btn btn-warning" id="qingkong" onClick="dropTouzhu()">清空</button>
+				<div id="wfcontent" class=""></div>
 			</div>
+		</div>
+
+
+		<div class="xiazhuwanfa" id="two" style="display: none;">
+			<div>
+				<div id="wfbtn" class="twwf ">
+					<button id="danya" class="btn btn-danger" data-id='1'>单压</button>
+					<button class="btn btn-success" id="erzhonger" data-id='2'>二中二</button>
+					<button class="btn btn-success" id="duizi" data-id='3'>对子</button>
+				</div>
+					<button class="btn btn-warning" id="qingkong" onClick="dropTouzhu()">清空</button>
+			<div id="wfcontent" class=""></div>
+			</div>
+		</div>
+		
 		<!--  -->
 		<!-- 游戏面板开始 -->
 			<div name='gamecontrol' class='gamecontrol'>
@@ -99,29 +115,16 @@
 		<!-- 历史结算栏结束 -->
 		</div>
 		<!-- 游戏面板结束 -->
-	
+			<div name='yazhuma' class='yazhuma'>
+				<div class="choumaimg choumacurrent" money='10'><img src="__STATIC__/images/10.png" alt=""></div>
+				<div class="choumaimg" money='50'><img src="__STATIC__/images/50.png" alt=""></div>
+				<div class="choumaimg" money='100'><img src="__STATIC__/images/100.png" alt=""></div>
+				<div class="choumaimg" money='500'><img src="__STATIC__/images/500.png" alt=""></div>
+				<div class="choumaimg" money='1000'><img src="__STATIC__/images/1000.png" alt=""></div>
+				<div class="choumaimg" money='10000'><img src="__STATIC__/images/10000.png" alt=""></div>
+				<div><button class="btn btn-warning " id="xiazhubtn">投注</button></div>
+			</div>
 	</div>
 <!-- 页面容器结束 -->
-<div class="xiazhuwanfa" id="three">
-	<div>
-		<div id="wfbtn" class="thwf played">
-			<button class="btn btn-danger "  id="danya" data-id ='4'>单压</button>
-			<button class="btn btn-success " id="erzhonger" data-id ='5' >二中二</button>
-			<button class="btn btn-success " id="baozi" data-id ='6'>豹子</button>
-		</div>
-		<div id="wfcontent" class=""></div>
-	</div>
-</div>
 
-
-<div class="xiazhuwanfa" id="two" style="display: none;">
-	<div>
-		<div id="wfbtn" class="twwf ">
-			<button id="danya" class="btn btn-danger" data-id='1'>单压</button>
-			<button class="btn btn-success" id="erzhonger" data-id='2'>二中二</button>
-			<button class="btn btn-success" id="duizi" data-id='3'>对子</button>
-		</div>
-	<div id="wfcontent" class=""></div>
-	</div>
-</div>
 {include file='common/footer'}

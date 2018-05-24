@@ -118,7 +118,7 @@ class Index extends Base
      * @return [type] [description]
      */
       function getTime(){  
-            $time = explode (" ", microtime () );   
+            $time = explode (" ", microtime());   
             $time = $time [1] . ($time [0] * 1000);   
             $time2 = explode ( ".", $time );   
             $time = $time2 [0];  
@@ -130,7 +130,7 @@ class Index extends Base
     }
 
     /**
-     * [checkTime 检查封单时间]
+     * [checkTime 检查封盘时间]
      * @return [type] [description]
      */
     function checkTime(){   
